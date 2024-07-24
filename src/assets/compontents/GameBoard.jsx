@@ -6,23 +6,35 @@ const initialGameBoard = [
     [null, null, null]
 ];
 
-export default function GameBoard() {
-    const [isClicked, setClicked] = useState(initialGameBoard);
+export default function GameBoard({ onSelectSquare, activePlayer, turns }) {
+    let gameBoard = initialGameBoard;
 
-    function handleSelectSquare(rowIndex, colIndex) {
-        setClicked(prevGameBoard => {
-            const upadatedBoard = [...prevGameBoard];
-            upadatedBoard[rowIndex][colIndex] = 'X';
-            return upadatedBoard;
-        });
+    for (const turn of turns) {
+        const { square, player } = turn;
+        const { row, col } = square;
+
+        gameBoard[row][col] = player;
     }
 
+    // const [isClicked, setClicked] = useState(initialGameBoard);
+
+    // function handleSelectSquare(rowIndex, colIndex) {
+    //     setClicked(prevGameBoard => {
+    //         const upadatedBoard = [...prevGameBoard];
+    //         upadatedBoard[rowIndex][colIndex] = activePlayer;
+    //         return upadatedBoard;
+    //     });
+
+    //     onSelectSquare();
+    // }
+
     return (<ol id="game-board">
-        {isClicked.map((row, rowIndex) => (
+        {gameBoard.map((row, rowIndex) => (
             <li key={rowIndex}>
                 <ol>
-                    {row.map((playerSymbol, colIndex) => (<li key={colIndex}><button onClick={() => handleSelectSquare(rowIndex, colIndex)}>{playerSymbol}</button></li>))}
+                    {row.map((playerSymbol, colIndex) => (<li key={colIndex}><button onClick={() => onSelectSquare(rowIndex, colIndex)} disabled={playerSymbol !== null}>{playerSymbol}</button></li>))}
                 </ol>
-            </li>))}
-    </ol>);
+            </li >))
+        }
+    </ol >);
 }

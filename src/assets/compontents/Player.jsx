@@ -1,10 +1,10 @@
 import { useState } from "react";
 
-export default function ({ children, symbol }) {
+export default function ({ children, symbol, isActive }) {
     const [isEdit, setEdit] = useState(false);
     const [playerName, setPlayerName] = useState(children);
 
-    return <li>
+    return <li className={isActive ? 'active' : undefined}>
         <span className="player">
             {!isEdit ? <span className="player-name">{playerName}</span> :
                 <input type="text" required value={playerName} onChange={(e) => setPlayerName(e.target.value)} />}
