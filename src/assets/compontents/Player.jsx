@@ -1,8 +1,11 @@
 import { useState } from "react";
+let players = [];
 
-export default function ({ children, symbol, isActive }) {
+export function Player({ children, symbol, isActive }) {
     const [isEdit, setEdit] = useState(false);
     const [playerName, setPlayerName] = useState(children);
+
+    { symbol === "X" ? players[0] = playerName : players[1] = playerName }
 
     return <li className={isActive ? 'active' : undefined}>
         <span className="player">
@@ -13,3 +16,7 @@ export default function ({ children, symbol, isActive }) {
         <button onClick={() => setEdit(edit => !edit)}>{!isEdit ? "Edit" : "Save"}</button>
     </li>;
 }
+
+export function Players() {
+    return players;
+};
